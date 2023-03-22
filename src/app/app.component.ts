@@ -19,10 +19,26 @@ interface Todo {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  editing = false;
   todos = todos;
+  editing = false;
+  title = '';
 
   get activeTodos() {
     return this.todos.filter(todo => !todo.completed);
+  }
+
+  addTodo() {
+    if (!this.title) {
+      return;
+    }
+
+    const newTodo: Todo = {
+      id: Date.now(),
+      title: this.title,
+      completed: false,
+    };
+
+    this.todos.push(newTodo);
+    this.title = '';
   }
 }
