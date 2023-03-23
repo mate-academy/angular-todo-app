@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Todo } from 'src/app/types/todo';
 
 @Component({
@@ -7,6 +7,8 @@ import { Todo } from 'src/app/types/todo';
   styleUrls: ['./todo.component.scss']
 })
 export class TodoComponent {
+  @Output() delete = new EventEmitter();
+
   @Input() todo!: Todo;
 
   editing = false;
