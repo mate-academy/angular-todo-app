@@ -10,5 +10,4 @@ export class TodoComponent {
   @Input() todo!: Todo;
 
   editing = false;
-
 }
