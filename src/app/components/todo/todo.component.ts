@@ -5,10 +5,12 @@ import { Todo } from 'src/app/types/todo';
   selector: 'app-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoComponent implements OnChanges {
   @Output() delete = new EventEmitter();
+  @Output() toggle = new EventEmitter();
+  @Output() rename = new EventEmitter<string>();
 
   @Input() todo!: Todo;
 
@@ -39,6 +41,6 @@ export class TodoComponent implements OnChanges {
     }
 
     this.editing = false;
-    this.todo.title = this.title;
+    this.rename.emit(this.title);
   }
 }
