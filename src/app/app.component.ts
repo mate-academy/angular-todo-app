@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Todo } from './types/todo';
 
@@ -6,8 +6,9 @@ import { Todo } from './types/todo';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   todos = [
     { id: 1, title: 'HTML + CSS', completed: true },
     { id: 2, title: 'JS', completed: false },
@@ -30,14 +31,6 @@ export class AppComponent implements OnInit {
 
   get activeTodos() {
     return this.todos.filter(todo => !todo.completed);
-  }
-
-  constructor() {}
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.todos[1] = { ...this.todos[1], title: 'qwerty' };
-    }, 3000);
   }
 
   trackById(i: number, todo: Todo) {
