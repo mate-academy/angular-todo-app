@@ -1,6 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Todo } from './types/todo';
+
+const todosFromServer = [
+  { id: 1, title: 'HTML + CSS', completed: true },
+  { id: 2, title: 'JS', completed: false },
+  { id: 3, title: 'React', completed: false },
+  { id: 4, title: 'Angular', completed: false },
+];
 
 @Component({
   selector: 'app-root',
@@ -8,42 +14,31 @@ import { Todo } from './types/todo';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
-  todos = [
-    { id: 1, title: 'HTML + CSS', completed: true },
-    { id: 2, title: 'JS', completed: false },
-    { id: 3, title: 'React', completed: false },
-    { id: 4, title: 'Angular', completed: false },
-  ];
+export class AppComponent implements OnInit {
+  _todos: Todo[] = [];
+  activeTodos: Todo[] = [];
 
-  todoForm = new FormGroup({
-    title: new FormControl('', {
-      nonNullable: true,
-      validators: [
-        Validators.required,
-      ],
-    }),
-  });
-
-  get title() {
-    return this.todoForm.get('title') as FormControl;
+  get todos() {
+    return this._todos;
   }
 
-  get activeTodos() {
-    return this.todos.filter(todo => !todo.completed);
+  set todos(todos: Todo[]) {
+    if (todos === this._todos) {
+      return;
+    }
+
+    this._todos = todos;
+    this.activeTodos = this._todos.filter(todo => !todo.completed);
+  }
+
+  constructor() {}
+
+  ngOnInit(): void {
+    this.todos = todosFromServer;
   }
 
   trackById(i: number, todo: Todo) {
     return todo.id;
-  }
-
-  handleFormSubmit() {
-    if (this.todoForm.invalid) {
-      return;
-    }
-
-    this.addTodo(this.title.value);
-    this.todoForm.reset();
   }
 
   addTodo(newTitle: string) {
