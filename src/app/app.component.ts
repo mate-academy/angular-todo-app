@@ -1,21 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { TodosService } from './services/todos.service';
 import { Todo } from './types/todo';
-
-const todosFromServer = [
-  { id: 1, title: 'HTML + CSS', completed: true },
-  { id: 2, title: 'JS', completed: false },
-  { id: 3, title: 'React', completed: false },
-  { id: 4, title: 'Angular', completed: false },
-];
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  _todos: Todo[] = [];
+  private _todos: Todo[] = [];
   activeTodos: Todo[] = [];
 
   get todos() {
@@ -31,10 +25,15 @@ export class AppComponent implements OnInit {
     this.activeTodos = this._todos.filter(todo => !todo.completed);
   }
 
-  constructor() {}
+  constructor(
+    private todosService: TodosService,
+  ) {}
 
   ngOnInit(): void {
-    this.todos = todosFromServer;
+    this.todosService.getTodos()
+      .subscribe((todos) => {
+        this.todos = todos;
+      })
   }
 
   trackById(i: number, todo: Todo) {

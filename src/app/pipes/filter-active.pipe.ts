@@ -7,8 +7,6 @@ import { Todo } from '../types/todo';
 })
 export class FilterActivePipe implements PipeTransform {
   transform(todos: Todo[]): Todo[] {
-    console.log('calc');
-
     return todos.filter(todo => !todo.completed);
   }
 }

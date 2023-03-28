@@ -26,7 +26,7 @@
 
   <ng-template #titleBlock>
     <span class="todo__title" (dblclick)="edit()">
-      {{ todo.title | lowercase | slice:0:3 }}
+      {{ todo.title }}
     </span>
 
     <button
