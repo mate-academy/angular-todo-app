@@ -26,13 +26,17 @@ export class AppComponent implements OnInit {
 
   constructor(
     private todosService: TodosService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    this.loadTodos();
+  }
+
+  loadTodos() {
     this.todosService.getTodos()
       .subscribe((todos) => {
         this.todos = todos;
-      })
+      });
   }
 
   trackById(i: number, todo: Todo) {
@@ -40,13 +44,8 @@ export class AppComponent implements OnInit {
   }
 
   addTodo(newTitle: string) {
-    const newTodo: Todo = {
-      id: Date.now(),
-      title: newTitle,
-      completed: false,
-    };
-
-    this.todos = [...this.todos, newTodo];
+    this.todosService.createTodo(newTitle)
+      .subscribe(() => this.loadTodos());
   }
 
   toggleTodo(todoId: number) {
