@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TodosService } from './services/todos.service';
 import { Todo } from './types/todo';
 
@@ -6,7 +6,6 @@ import { Todo } from './types/todo';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   private _todos: Todo[] = [];
