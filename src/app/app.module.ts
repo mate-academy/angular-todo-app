@@ -9,6 +9,7 @@ import { TodoComponent } from './components/todo/todo.component';
 import { TodoFormComponent } from './components/todo-form/todo-form.component';
 import { FilterActivePipe } from './pipes/filter-active.pipe';
 import { MessageComponent } from './components/message/message.component';
+import { TodosPageComponent } from './pages/todos-page/todos-page.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MessageComponent } from './components/message/message.component';
     TodoFormComponent,
     FilterActivePipe,
     MessageComponent,
+    TodosPageComponent,
   ],
   imports: [
     BrowserModule,
