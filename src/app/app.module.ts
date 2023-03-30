@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { TodoComponent } from './components/todo/todo.component';
 import { TodoFormComponent } from './components/todo-form/todo-form.component';
 import { FilterActivePipe } from './pipes/filter-active.pipe';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { FilterActivePipe } from './pipes/filter-active.pipe';
     TodoComponent,
     TodoFormComponent,
     FilterActivePipe,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,

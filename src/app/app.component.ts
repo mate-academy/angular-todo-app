@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from './services/message.service';
 import { TodosService } from './services/todos.service';
 import { Todo } from './types/todo';
 
@@ -10,6 +11,7 @@ import { Todo } from './types/todo';
 export class AppComponent implements OnInit {
   private _todos: Todo[] = [];
   activeTodos: Todo[] = [];
+  errorMessage = '';
 
   get todos() {
     return this._todos;
@@ -26,6 +28,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private todosService: TodosService,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +37,10 @@ export class AppComponent implements OnInit {
         this.todos = todos;
       });
 
-    this.todosService.loadTodos().subscribe()
+    this.todosService.loadTodos()
+      .subscribe({
+        error: () => this.messageService.showMessage('Unable to load todos'),
+      })
   }
 
   trackById(i: number, todo: Todo) {
@@ -43,21 +49,29 @@ export class AppComponent implements OnInit {
 
   addTodo(newTitle: string) {
     this.todosService.createTodo(newTitle)
-      .subscribe();
+      .subscribe({
+        error: () => this.messageService.showMessage('Unable to add a todo'),
+      });
   }
 
   toggleTodo(todo: Todo) {
     this.todosService.updateTodo({ ...todo, completed: !todo.completed })
-      .subscribe()
+      .subscribe({
+        error: () => this.messageService.showMessage('Unable to toggle a todo'),
+      });
   }
 
   renameTodo(todo: Todo, title: string) {
     this.todosService.updateTodo({ ...todo, title })
-      .subscribe();
+      .subscribe({
+        error: () => this.messageService.showMessage('Unable to rename a todo'),
+      });
   }
 
   deleteTodo(todo: Todo) {
     this.todosService.deleteTodo(todo)
-      .subscribe();
+      .subscribe({
+        error: () => this.messageService.showMessage('Unable to delete a todo'),
+      });
   }
 }
