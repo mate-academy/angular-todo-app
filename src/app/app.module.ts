@@ -10,32 +10,34 @@ import { FilterActivePipe } from './pipes/filter-active.pipe';
 import { MessageComponent } from './components/message/message.component';
 import { TodosPageComponent } from './pages/todos-page/todos-page.component';
 import { RouterModule, Routes } from '@angular/router';
+import { FilterComponent } from './components/filter/filter.component';
 
 const routes: Routes = [
-  { path: 'todos', component: TodosPageComponent },
   {
     path: 'about',
     loadChildren: () =>
       import('./about/about.module').then(m => m.AboutModule)
   },
-  { path: '**', redirectTo: '/todos', pathMatch: 'full' },
+  { path: 'todos/:status', component: TodosPageComponent },
+  { path: '**', redirectTo: '/todos/all', pathMatch: 'full' },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
+    FilterActivePipe,
+    FilterComponent,
+    MessageComponent,
     TodoComponent,
     TodoFormComponent,
-    FilterActivePipe,
-    MessageComponent,
     TodosPageComponent,
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
     FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot(routes),
   ],
   providers: [],
   bootstrap: [AppComponent]
